@@ -17,6 +17,13 @@ public:
     virtual ~DnaSequence();
 
     friend std::ostream& operator<<(std::ostream& os, const DnaSequence& dnaSequence);
+    DnaSequence& operator=(const DnaSequence& other);
+    DnaSequence& operator=(const char* other);
+    DnaSequence& operator=(const std::string& other);
+    bool operator==(const DnaSequence& other);
+    bool operator!=(const DnaSequence& other);
+    Nucleotide& operator[](size_t i);
+    size_t getLength();
 
 
 private:
