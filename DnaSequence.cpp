@@ -139,7 +139,7 @@ DnaSequence &DnaSequence::operator=(const char *other) {
     }
     catch (std::bad_alloc& e) {
         std::cout << e.what() << std::endl;
-        return;
+
 
     }
 
@@ -174,7 +174,6 @@ DnaSequence &DnaSequence::operator=(const std::string &other) {
     }
     catch (std::bad_alloc& e) {
         std::cout << e.what() << std::endl;
-        return;
 
     }
 
