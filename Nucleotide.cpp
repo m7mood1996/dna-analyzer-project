@@ -5,8 +5,9 @@
 #include "Nucleotide.h"
 
 std::ostream &operator<<(std::ostream &os, const Nucleotide &nucleotide) {
+    os << nucleotide.m_type;
 
-    return nucleotide.out(os);
+    return os;
 }
 
 Nucleotide::Nucleotide() {
@@ -15,4 +16,13 @@ Nucleotide::Nucleotide() {
 
 Nucleotide::~Nucleotide() {
 
+}
+
+void Nucleotide::setType(char type) {
+    m_type = type;
+
+}
+
+char Nucleotide::getType() {
+    return m_type;
 }

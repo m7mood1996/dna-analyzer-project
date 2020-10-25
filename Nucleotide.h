@@ -11,11 +11,12 @@ public:
     Nucleotide();
 
     virtual ~Nucleotide();
-
-    virtual std::ostream& out(std::ostream& os) const =0;
+    void setType(char type);
+    char getType();
     friend std::ostream& operator<<(std::ostream& os, const Nucleotide& nucleotide);
 
-
+private:
+    char m_type;
 };
 
 

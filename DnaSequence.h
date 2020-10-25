@@ -27,7 +27,7 @@ public:
 
 
 private:
-    Nucleotide** nucleotides;
+    Nucleotide* nucleotides;
     size_t size;
 
 };
