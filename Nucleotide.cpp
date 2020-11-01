@@ -23,6 +23,8 @@ void Nucleotide::setType(char type) {
 
 }
 
+
 char Nucleotide::getType() const{
+
     return m_type;
 }
