@@ -12,7 +12,7 @@ public:
 
     virtual ~Nucleotide();
     void setType(char type);
-    char getType();
+    char getType()const;
     friend std::ostream& operator<<(std::ostream& os, const Nucleotide& nucleotide);
 
 private:

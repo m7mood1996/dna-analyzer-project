@@ -72,7 +72,7 @@ DnaSequence::DnaSequence(const std::string& string) {
                 nucleotides[i].setType('G');
                 break;
             case 'C':
-                nucleotides[i].setType('G');
+                nucleotides[i].setType('C');
                 break;
             case 'T':
                 nucleotides[i].setType('T');
@@ -216,13 +216,13 @@ bool DnaSequence::operator!=(const DnaSequence &other) {
     return !(*this == other);
 }
 
-Nucleotide &DnaSequence::operator[](size_t i) {
+const Nucleotide &DnaSequence::operator[](size_t i) const{
     if (i > size)
         throw std::out_of_range("invalid index");
     return nucleotides[i];
 }
 
-size_t DnaSequence::getLength() {
+size_t DnaSequence::getLength() const {
     return size;
 }
 

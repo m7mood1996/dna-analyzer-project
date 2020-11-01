@@ -22,8 +22,9 @@ public:
     DnaSequence& operator=(const std::string& other);
     bool operator==(const DnaSequence& other);
     bool operator!=(const DnaSequence& other);
-    Nucleotide& operator[](size_t i);
-    size_t getLength();
+    const Nucleotide& operator[](size_t i) const;
+    size_t getLength() const;
+
 
 
 private:

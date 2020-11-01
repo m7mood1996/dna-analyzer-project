@@ -2,3 +2,5 @@
 *.o
 r
 cmake-build-debug
+filename.txt
+myfile.txt
