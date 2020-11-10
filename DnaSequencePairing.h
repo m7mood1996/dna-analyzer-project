@@ -8,7 +8,7 @@
 class DnaSequence;
 class DnaSequencePairing {
 public:
-    static DnaSequence Pairing(DnaSequence& dnaSequence);
+    static DnaSequence Pairing(DnaSequence& dnaSequence, std::string name);
 
 };
 void reverseStr(std::string& str);

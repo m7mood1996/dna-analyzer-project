@@ -14,7 +14,7 @@
 
 
 
-DnaSequence::DnaSequence(const char *str) {
+DnaSequence::DnaSequence(const char *str, const std::string name):name(name) {
 
     size_t n = std::strlen(str);
     size = n;
@@ -51,7 +51,7 @@ DnaSequence::DnaSequence(const char *str) {
 }
 
 
-DnaSequence::DnaSequence(const std::string& string) {
+DnaSequence::DnaSequence(const std::string& string, const std::string name):name(name) {
     size_t n = string.length();
     size = n;
     try {
@@ -108,6 +108,7 @@ DnaSequence::~DnaSequence() {
 }
 
 std::ostream& operator<<(std::ostream& os,const DnaSequence &dnaSequence) {
+    os << dnaSequence.name << " ";
     for (size_t i =0;i<dnaSequence.size;i++)
         os << dnaSequence.nucleotides[i].getType();
     return os;
@@ -224,6 +225,15 @@ const Nucleotide &DnaSequence::operator[](size_t i) const{
 
 size_t DnaSequence::getLength() const {
     return size;
+}
+
+std::string DnaSequence::getName() {
+    return name;
+}
+
+void DnaSequence::setName(std::string newName) {
+    name = newName;
+
 }
 
 

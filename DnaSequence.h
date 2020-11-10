@@ -11,8 +11,8 @@ class Nucleotide;
 
 class DnaSequence {
 public:
-    DnaSequence(const char *str);
-    DnaSequence(const std::string& string);
+    DnaSequence(const char *str, const std::string name);
+    DnaSequence(const std::string& string, const std::string name);
     DnaSequence(const DnaSequence& dnaSequence);
     virtual ~DnaSequence();
 
@@ -24,12 +24,15 @@ public:
     bool operator!=(const DnaSequence& other);
     const Nucleotide& operator[](size_t i) const;
     size_t getLength() const;
+    std::string getName();
+    void setName(std::string name);
 
 
 
 private:
     Nucleotide* nucleotides;
     size_t size;
+    std::string name;
 
 };
 #endif //DNA_DNASEQUENCE_H
