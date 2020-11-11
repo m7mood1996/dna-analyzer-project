@@ -4,6 +4,6 @@ project(DNA)
 set(CMAKE_CXX_STANDARD 98)
 
 
-add_executable(DNA main.cpp DnaSequence.cpp DnaSequence.h Nucleotide.cpp Nucleotide.h DnaSequenceFile.cpp DnaSequenceFile.h DnaSequenceSlicing.cpp DnaSequenceSlicing.h DnaSequencePairing.cpp DnaSequencePairing.h DnaSequenceSearch.cpp DnaSequenceSearch.h)
+add_executable(DNA main.cpp DnaSequence.cpp DnaSequence.h Nucleotide.cpp Nucleotide.h DnaSequenceFile.cpp DnaSequenceFile.h DnaSequenceSlicing.cpp DnaSequenceSlicing.h DnaSequencePairing.cpp DnaSequencePairing.h DnaSequenceSearch.cpp DnaSequenceSearch.h CLI.cpp CLI.h)
 
 target_link_libraries(DNA gtest gtest_main pthread)
