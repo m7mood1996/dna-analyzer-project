@@ -7,6 +7,7 @@
 #include <string>
 #include <cstdio>
 #include "DnaSequence.h"
+#include "DnaSequenceDecorator.h"
 #include "DnaSequenceFile.h"
 #include "DnaSequenceSlicing.h"
 #include "DnaSequencePairing.h"
@@ -29,7 +30,7 @@ size_t CLI::number_from_string(string num){
 }
 
 
-bool CLI::newSequnce(vector<string>& user_input, vector<DnaSequence *>& dnaSequnces ){
+bool CLI::newSequnce(vector<string>& user_input, vector<DnaSequenceDecorator *>& dnaSequnces ){
     string newName;
     if ( user_input.back()[0] == '@') {
 
@@ -47,14 +48,14 @@ bool CLI::newSequnce(vector<string>& user_input, vector<DnaSequence *>& dnaSequn
         newName = "seq" + string(length);
     }
 
-    DnaSequence *d;
-    d = new DnaSequence(user_input.back(),newName);
+    DnaSequenceDecorator *d;
+    d = new DnaSequenceDecorator(user_input.back(),newName,dnaSequnces.size());
     dnaSequnces.push_back(d);
-    cout << "[" << dnaSequnces.size()-1 << "] " << *dnaSequnces.back();
+    cout << "[" << dnaSequnces.size()-1 << "] " << *(dnaSequnces.back()) <<" " << dnaSequnces.back()->getName();
     return true;
 
 }
-bool CLI::loadSequnce(vector<string>& user_input, vector<DnaSequence *>& dnaSequnces){
+bool CLI::loadSequnce(vector<string>& user_input, vector<DnaSequenceDecorator *>& dnaSequnces){
     string newName;
     if ( user_input.back()[0] == '@') {
 
@@ -72,17 +73,19 @@ bool CLI::loadSequnce(vector<string>& user_input, vector<DnaSequence *>& dnaSequ
         newName = "seq" + string(length);
     }
 
-    DnaSequence *d;
-    d = DnaSequenceFile::ReadSequenceFromFile(user_input.back().c_str(), newName);
+    DnaSequenceDecorator *d;
+    d = (DnaSequenceDecorator *)DnaSequenceFile::ReadSequenceFromFile(user_input.back().c_str());
+    d->setName( newName);
+    d->setid( dnaSequnces.size());
     dnaSequnces.push_back(d);
-    cout << "[" << dnaSequnces.size()-1 << "] " << *dnaSequnces.back();
+    cout << "[" << dnaSequnces.size()-1 << "] " << *dnaSequnces.back() << " " << dnaSequnces.back()->getName();
     return true;
 
 }
 
-bool CLI::dupSequnce(vector<string>& user_input, vector<DnaSequence *>& dnaSequnces){
+bool CLI::dupSequnce(vector<string>& user_input, vector<DnaSequenceDecorator *>& dnaSequnces){
     string newName;
-    std::size_t id;
+    std::size_t id = 0;
     if ( user_input.back()[0] == '@') {
 
         newName = user_input.back().substr(1);
@@ -93,7 +96,7 @@ bool CLI::dupSequnce(vector<string>& user_input, vector<DnaSequence *>& dnaSequn
 
     else{
         string str_id = user_input.back().substr(1);
-        std::size_t id = number_from_string(str_id);
+        id = number_from_string(str_id);
         if (id >= dnaSequnces.size())
             return false;
 
@@ -105,17 +108,16 @@ bool CLI::dupSequnce(vector<string>& user_input, vector<DnaSequence *>& dnaSequn
 
     }
 
-    DnaSequence *d;
-    d = new DnaSequence(*dnaSequnces[id]);
-    d->setName(newName);
+    DnaSequenceDecorator *d;
+    d = new DnaSequenceDecorator(*dnaSequnces[id],newName,dnaSequnces.size());
     dnaSequnces.push_back(d);
-    cout << "[" << dnaSequnces.size()-1 << "] " << *dnaSequnces.back();
+    cout << "[" << dnaSequnces.size()-1 << "] " << *dnaSequnces.back() << " " << dnaSequnces.back()->getName();
     return true;
 }
 
 
 void CLI::CLI_connect_to_system() {
-    vector<DnaSequence *> dnaSequnces;
+    vector<DnaSequenceDecorator *> dnaSequnces;
     string delimiter = " ";
     std::size_t i = 0;
     size_t pos = 0;

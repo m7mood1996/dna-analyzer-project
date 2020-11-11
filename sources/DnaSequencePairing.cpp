@@ -26,7 +26,7 @@ DnaSequence DnaSequencePairing::Pairing(DnaSequence &dnaSequence) {
     }
     reverseStr(newDna);
 
-    return DnaSequence(newDna,"");
+    return DnaSequence(newDna);
 }
 
 

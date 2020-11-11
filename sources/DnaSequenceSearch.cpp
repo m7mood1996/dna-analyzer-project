@@ -92,8 +92,8 @@ std::list<size_t> DnaSequenceSearch::FindAll(DnaSequence &dnaSequence, DnaSequen
 }
 
 std::list<size_t> DnaSequenceSearch::FindConsensusSequences(DnaSequence &dnaSequence) {
-    static const DnaSequence startCodon("ATG","");
-    static const DnaSequence EndCodons[] = {DnaSequence("TAG",""),DnaSequence("TAA",""),DnaSequence("TGA","")};
+    static const DnaSequence startCodon("ATG");
+    static const DnaSequence EndCodons[] = {DnaSequence("TAG"),DnaSequence("TAA"),DnaSequence("TGA")};
     if (dnaSequence.getLength() <=3)
         throw std::runtime_error("cant finding codons in dna with less than 3 Nucleotides");
 

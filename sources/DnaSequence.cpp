@@ -14,7 +14,7 @@
 
 
 
-DnaSequence::DnaSequence(const char *str, std::string newName):name(newName) {
+DnaSequence::DnaSequence(const char *str) {
 
     size_t n = std::strlen(str);
     size = n;
@@ -51,7 +51,7 @@ DnaSequence::DnaSequence(const char *str, std::string newName):name(newName) {
 }
 
 
-DnaSequence::DnaSequence(const std::string& string, std::string newName):name(newName) {
+DnaSequence::DnaSequence(const std::string& string) {
     size_t n = string.length();
     size = n;
     try {
@@ -226,13 +226,5 @@ size_t DnaSequence::getLength() const {
     return size;
 }
 
-std::string DnaSequence::getName() {
-    return name;
-}
-
-void DnaSequence::setName(std::string newName) {
-    name = newName;
-
-}
 
 

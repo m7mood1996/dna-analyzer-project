@@ -13,7 +13,7 @@
 
 using namespace std;
 
-DnaSequence* DnaSequenceFile::ReadSequenceFromFile(const char* filePath, std::string newName) {
+DnaSequence* DnaSequenceFile::ReadSequenceFromFile(const char* filePath) {
 
     ifstream myfile;
     myfile.open(filePath);
@@ -22,7 +22,7 @@ DnaSequence* DnaSequenceFile::ReadSequenceFromFile(const char* filePath, std::st
     string dna;
     getline(myfile, dna);
 
-    return new DnaSequence(dna,"");
+    return new DnaSequence(dna);
 }
 
 bool DnaSequenceFile::WriteSequencetoFile(const DnaSequence& dnaSequence) {

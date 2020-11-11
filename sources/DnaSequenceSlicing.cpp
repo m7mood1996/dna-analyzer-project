@@ -17,5 +17,5 @@ DnaSequence DnaSequenceSlicing::Slice(DnaSequence &dnaSequence,size_t from, size
         newDna += dnaSequence[i].getType();
     }
 
-    return DnaSequence(newDna, "");
+    return DnaSequence(newDna);
 }
