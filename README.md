@@ -1,4 +1,5 @@
 # cpp-ood-dna-sequence-m7mood1996
+<<<<<<< HEAD
 
 
 ## DNA Class diagram
@@ -105,3 +106,5 @@ rectangle CLI{
 
 
 ```
+=======
+>>>>>>> parent of ae93f57... add files
