@@ -4,3 +4,4 @@ r
 cmake-build-debug
 filename.txt
 myfile.txt
+.DS_Store

@@ -1,7 +1,6 @@
 # cpp-ood-dna-sequence-m7mood1996
 
 
-
 ## DNA Class diagram
 ```plantuml
 
@@ -106,4 +105,3 @@ rectangle CLI{
 
 
 ```
-

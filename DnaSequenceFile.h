@@ -9,8 +9,8 @@
 
 class DnaSequenceFile {
 public:
-    static DnaSequence *ReadSequenceFromFile(const char *filePath, std::string name);
-    static bool WriteSequencetoFile(const DnaSequence& dnaSequence, const char * filePath);
+    static DnaSequence *ReadSequenceFromFile(const char *filePath, std::string newName);
+    static bool WriteSequencetoFile(const DnaSequence& dnaSequence);
 
 };
 

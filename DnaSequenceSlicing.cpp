@@ -8,7 +8,7 @@
 
 using namespace std;
 
-DnaSequence DnaSequenceSlicing::Slice(DnaSequence &dnaSequence,size_t from, size_t to, string name) {
+DnaSequence DnaSequenceSlicing::Slice(DnaSequence &dnaSequence,size_t from, size_t to) {
     if (from > to || to > dnaSequence.getLength())
         throw runtime_error("unable to open file");
 
@@ -17,5 +17,5 @@ DnaSequence DnaSequenceSlicing::Slice(DnaSequence &dnaSequence,size_t from, size
         newDna += dnaSequence[i].getType();
     }
 
-    return DnaSequence(newDna, name);
+    return DnaSequence(newDna, "");
 }

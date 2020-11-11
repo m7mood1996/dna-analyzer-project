@@ -9,7 +9,7 @@
 
 class DnaSequenceSlicing {
 public:
-    static DnaSequence Slice(DnaSequence &dnaSequence, size_t from, size_t to, std::string name);
+    static DnaSequence Slice(DnaSequence &dnaSequence, size_t from, size_t to);
 
 };
 

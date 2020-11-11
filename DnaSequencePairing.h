@@ -7,11 +7,13 @@
 
 class DnaSequence;
 class DnaSequencePairing {
+    private:
+    static void reverseStr(std::string& str);
+
 public:
-    static DnaSequence Pairing(DnaSequence& dnaSequence, std::string name);
+    static DnaSequence Pairing(DnaSequence& dnaSequence);
 
 };
-void reverseStr(std::string& str);
 
 
 #endif //DNA_DNASEQUENCEPAIRING_H
