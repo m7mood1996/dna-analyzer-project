@@ -1,4 +1,4 @@
-# cpp-ood-dna-sequence-m7mood1996
+# cpp-dna-analyzer-project-m7mood1996
 
 
 
@@ -58,6 +58,16 @@ class DnaSequenceSlicing {
 
 }
 
+class CLI{
+        + CLI_connect_to_system()
+
+}
+
+CLI --|> DnaSequenceFile 
+CLI --|> DnaSequencePairing 
+CLI --|> DnaSequenceSearch 
+CLI --|> DnaSequenceSlicing 
+
 ```
 
 # Packeges
@@ -106,4 +116,3 @@ rectangle CLI{
 
 
 ```
-
