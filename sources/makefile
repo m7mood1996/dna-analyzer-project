@@ -1,11 +1,11 @@
-TARGET=r
+TARGET=DNA_ANALAYZER
 SOURCES=$(wildcard *.cpp)
 OBJS=$(SOURCES:.cpp=.o)
 
 CC=g++
 CFLAGS= -c -pedantic -Wall -Wconversion  -g
 CXXFLAGS=$(CFLAGS)
-LDFLAGS= -g -lgtest -lgtest_main -lpthread
+LDFLAGS= -g
 
 .PHONY: clean run gdb
 $(TARGET): $(OBJS)

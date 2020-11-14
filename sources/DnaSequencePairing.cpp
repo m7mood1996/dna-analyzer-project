@@ -2,7 +2,7 @@
 // Created by mahmood on 11/1/20.
 //
 
-#include "DnaSequenceSlicing.h"
+#include "DnaSequenceMinipulation.h"
 #include "Nucleotide.h"
 
 #include "DnaSequencePairing.h"

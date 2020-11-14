@@ -28,7 +28,7 @@ DnaSequence "1"*---"1..*" Nucleotide
 DnaSequenceFile -right-|> DnaSequence
 DnaSequencePairing -left-|> DnaSequence
 DnaSequenceSearch --|> DnaSequence
-DnaSequenceSlicing --|> DnaSequence
+DnaSequenceMinipulation --|> DnaSequence
 
 
 class DnaSequenceFile {
@@ -51,7 +51,7 @@ class DnaSequenceSearch {
 
 }
 
-class DnaSequenceSlicing {
+class DnaSequenceMinipulation {
 
     +Slice(DnaSequence , from: size_t, to:size_t): DnaSequence
 

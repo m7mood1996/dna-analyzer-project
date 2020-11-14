@@ -36,7 +36,7 @@ DnaSequence::DnaSequence(const char *str) {
                 nucleotides[i].setType('G');
                 break;
             case 'C':
-                nucleotides[i] .setType('G');
+                nucleotides[i] .setType('C');
                 break;
             case 'T':
                 nucleotides[i].setType('T');
@@ -152,7 +152,7 @@ DnaSequence &DnaSequence::operator=(const char *other) {
                 nucleotides[i].setType('G');
                 break;
             case 'C':
-                nucleotides[i].setType('G');
+                nucleotides[i].setType('C');
                 break;
             case 'T':
                 nucleotides[i].setType('T');
@@ -186,7 +186,7 @@ DnaSequence &DnaSequence::operator=(const std::string &other) {
                 nucleotides[i].setType('G');
                 break;
             case 'C':
-                nucleotides[i].setType('G');
+                nucleotides[i].setType('C');
                 break;
             case 'T':
                 nucleotides[i].setType('T');
@@ -224,6 +224,26 @@ const Nucleotide &DnaSequence::operator[](size_t i) const{
 
 size_t DnaSequence::getLength() const {
     return size;
+}
+
+void DnaSequence::at(size_t i, char nuc) {
+    switch (nuc) {
+        case 'A':
+            nucleotides[i].setType('A');
+            break;
+        case 'G':
+            nucleotides[i].setType('G');
+            break;
+        case 'C':
+            nucleotides[i].setType('C');
+            break;
+        case 'T':
+            nucleotides[i].setType('T');
+            break;
+        default:
+            throw std::invalid_argument("invalid DNA Sequence");
+    }
+
 }
 
 

@@ -27,7 +27,7 @@ DnaSequence "1"*---"1..*" Nucleotide
 DnaSequenceFile -right-|> DnaSequence
 DnaSequencePairing -right-|> DnaSequence
 DnaSequenceSearch --|> DnaSequence
-DnaSequenceSlicing --|> DnaSequence
+DnaSequenceMinipulation --|> DnaSequence
 
 class DnaSequenceDecorator{
     - sequence: DnaSequence
@@ -64,7 +64,7 @@ class DnaSequenceSearch {
 
 }
 
-class DnaSequenceSlicing {
+class DnaSequenceMinipulation {
 
     +Slice(DnaSequence , from: size_t, to:size_t): DnaSequence
 
@@ -78,7 +78,7 @@ class CLI{
 CLI --|> DnaSequenceFile 
 CLI --|> DnaSequencePairing 
 CLI --|> DnaSequenceSearch 
-CLI --|> DnaSequenceSlicing 
+CLI --|> DnaSequenceMinipulation 
 
 ```
 
