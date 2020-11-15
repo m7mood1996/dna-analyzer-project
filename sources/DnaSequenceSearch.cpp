@@ -16,7 +16,7 @@ std::size_t DnaSequenceSearch::Find(DnaSequence &dnaSequence, DnaSequence &sub_d
     size_t sL = sub_dnaSequence.getLength();
     size_t l = dnaSequence.getLength() - sub_dnaSequence.getLength();
     size_t k = 0;
-    for (size_t i = 0; i < l; i++) {
+    for (size_t i = 0; i <= l; i++) {
         if (dnaSequence[i].getType() == sub_dnaSequence[k].getType()) {
             for (int j = 0; j < sub_dnaSequence.getLength(); j++) {
                 if (dnaSequence[i + j].getType() == sub_dnaSequence[j].getType()) {
@@ -42,7 +42,7 @@ std::size_t DnaSequenceSearch::Count(DnaSequence &dnaSequence, DnaSequence &sub_
     size_t sL = sub_dnaSequence.getLength();
     size_t l = dnaSequence.getLength() - sub_dnaSequence.getLength();
     size_t k = 0;
-    for (size_t i = 0; i < l; i++) {
+    for (size_t i = 0; i <= l; i++) {
         if (dnaSequence[i].getType() == sub_dnaSequence[k].getType()) {
             for (int j = 0; j < sub_dnaSequence.getLength(); j++) {
                 if (dnaSequence[i + j].getType() == sub_dnaSequence[j].getType()) {

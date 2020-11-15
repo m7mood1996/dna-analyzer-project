@@ -9,7 +9,7 @@
 
 using namespace std;
 
-DnaSequence DnaSequencePairing::Pairing(DnaSequence &dnaSequence) {
+std::string DnaSequencePairing::Pairing(DnaSequence &dnaSequence) {
     string newDna;
     char temp;
     for (size_t i= 0; i < dnaSequence.getLength() ; i++) {
@@ -26,7 +26,7 @@ DnaSequence DnaSequencePairing::Pairing(DnaSequence &dnaSequence) {
     }
     reverseStr(newDna);
 
-    return DnaSequence(newDna);
+    return newDna;
 }
 
 

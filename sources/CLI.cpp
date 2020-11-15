@@ -126,9 +126,9 @@ void CLI::CLI_connect_to_system() {
     string token;
     string command;
     vector<string> tokens;
+    string line;
     while (true) {
         cout << "> cmd >> ";
-        string line;
 
         getline(cin, line);
 
@@ -148,18 +148,45 @@ void CLI::CLI_connect_to_system() {
 
         if (tokens.at(0) == "dup")
             dupSequnce(tokens, dnaSequnces);
+
         if (tokens.at(0) == "end")
             break;
+
         if (tokens.at(0) == "list")
             listSequnce(dnaSequnces);
+
         if (tokens.at(0) == "save")
             saveSequnce(tokens,dnaSequnces);
+
         if (tokens.at(0) == "slice")
             sliceSequnce(tokens,dnaSequnces);
+
         if (tokens.at(0) == "replace")
             replaceSequnce(tokens,dnaSequnces);
+
         if (tokens.at(0) == "concat")
             concatSequnce(tokens,dnaSequnces);
+
+        if (tokens.at(0) == "pair")
+            pairSequnce(tokens,dnaSequnces);
+
+        if (tokens.at(0) == "rename")
+            renameSequnce(tokens,dnaSequnces);
+
+        if (tokens.at(0) == "del")
+            delSequnce(tokens,dnaSequnces);
+
+        if (tokens.at(0) == "len")
+            lenSequnce(tokens,dnaSequnces);
+
+        if (tokens.at(0) == "find")
+            findSequnce(tokens,dnaSequnces);
+
+        if (tokens.at(0) == "findall") // not good
+            findAllSequnce(tokens,dnaSequnces);
+        if (tokens.at(0) == "count")
+            countSequnce(tokens,dnaSequnces);
+
         cout << endl;
 
         line = "";
@@ -513,7 +540,492 @@ bool CLI::concatSequnce(vector<std::string> &user_input, vector<DnaSequenceDecor
 
 }
 
+bool CLI::pairSequnce(std::vector<string> &user_input, std::vector<DnaSequenceDecorator *> &dnaSequences) {
+
+    string newName;
+    char s_num[20];
+    int the_s_number = 0;
+    size_t id;
+    std::size_t i=0;
+    DnaSequenceDecorator *d = NULL;
 
 
+    if (user_input.back() == "@@") {
+        user_input.pop_back();
+        if(user_input.back()[0] != ':') {
+            cout << "syntax error" << endl;
+            return false;
+        }
+        user_input.pop_back();
+        try {
+            id = number_from_string(user_input.back().substr(1));
+        }
+        catch (exception &ex) {
+            cout << "syntax error" << endl;
+            return false;
+        }
+
+        for (;i<dnaSequences.size();i++){
+            if (id == dnaSequences[i]->getId())
+                d = dnaSequences[i];
+        }
+        if (d == NULL) {
+            cout << "this id not available chick list command " << endl;
+            return false;
+        }
+        newName = d->getName() + "_p1";
+        the_s_number = 1;
+        for (;i<dnaSequences.size();i++){
+            if (newName == dnaSequences[i]->getName())
+                the_s_number += 1;
+
+            sprintf(s_num,"%d",the_s_number);
+            newName = newName.substr(0,newName.length()-1)+ string(s_num);
+        }
+        DnaFactory *factory = new NewDna();
+        DnaSequenceDecorator *newDna = factory->creat(DnaSequencePairing::Pairing(*d), newName, dnaSequences.size());
+        dnaSequences.push_back(newDna);
+        delete  factory;
+        std::cout <<"["<<newDna->getId() << "] "<< *newDna <<" " << newDna->getName() << std::endl;
+        return true;
+    }
+    else if(user_input.back()[0] == '@') {
+        newName = user_input.back().substr(1);
+        user_input.pop_back();
+        if(user_input.back()[0] != ':') {
+            cout << "syntax error" << endl;
+            return false;
+        }
+        user_input.pop_back();
+        try {
+            id = number_from_string(user_input.back().substr(1));
+        }
+        catch (exception &ex) {
+            cout << "syntax error" << endl;
+            return false;
+        }
+
+        for (;i<dnaSequences.size();i++){
+            if (id == dnaSequences[i]->getId())
+                d = dnaSequences[i];
+        }
+        if (d == NULL) {
+            cout << "this id not available chick list command " << endl;
+            return false;
+        }
+        DnaFactory *factory = new NewDna();
+        DnaSequenceDecorator *newDna = factory->creat(DnaSequencePairing::Pairing(*d), newName, dnaSequences.size());
+        dnaSequences.push_back(newDna);
+        delete  factory;
+        std::cout <<"["<<newDna->getId() << "] "<< *newDna <<" " << newDna->getName() << std::endl;
+        return true;
+    }
+
+    else if(user_input.back()[0] == ':') {
+        cout << "syntax error" << endl;
+        return false;
+    }
 
 
+    else{
+        newName = "paired_seq";
+        try {
+            id = number_from_string(user_input.back().substr(1));
+        }
+        catch (exception &ex) {
+            cout << "syntax error" << endl;
+            return false;
+        }
+
+        for (;i<dnaSequences.size();i++){
+            if (id == dnaSequences[i]->getId())
+                d = dnaSequences[i];
+        }
+        if (d == NULL) {
+            cout << "this id not available chick list command " << endl;
+            return false;
+        }
+        DnaFactory *factory = new NewDna();
+        DnaSequenceDecorator *newDna = factory->creat(DnaSequencePairing::Pairing(*d), newName, dnaSequences.size());
+        dnaSequences.push_back(newDna);
+        delete  factory;
+        std::cout <<"["<<newDna->getId() << "] "<< *newDna <<" " << newDna->getName() << std::endl;
+        return true;
+    }
+}
+
+bool CLI::renameSequnce(std::vector<string> user_input, std::vector<DnaSequenceDecorator *> dnaSequences) {
+    string newName;
+    size_t id;
+    std::size_t i=0;
+    DnaSequenceDecorator *d = NULL;
+
+    if (user_input.size() != 3){
+        cout << "syntax error" << endl;
+        return false;
+    }
+
+    else if(user_input.back()[0] == '@') {
+        newName = user_input.back().substr(1);
+        user_input.pop_back();
+        if(user_input.back()[0] != '#') {
+            cout << "syntax error" << endl;
+            return false;
+        }
+        try {
+            id = number_from_string(user_input.back().substr(1));
+        }
+        catch (exception &ex) {
+            cout << "syntax error" << endl;
+            return false;
+        }
+
+        for (;i<dnaSequences.size();i++){
+            if (id == dnaSequences[i]->getId())
+                d = dnaSequences[i];
+        }
+        if (d == NULL) {
+            cout << "this id not available chick list command " << endl;
+            return false;
+        }
+        d->setName(newName);
+        std::cout <<"["<<d->getId() << "] "<< *d <<" " << d->getName() << std::endl;
+        return true;
+    }
+    return false;
+}
+
+bool CLI::delSequnce(vector<string>& user_input, std::vector<DnaSequenceDecorator *> &dnaSequences) {
+
+    string confirm;
+    size_t id;
+    std::size_t i=0;
+    DnaSequenceDecorator *d = NULL;
+
+    if (user_input.size() != 2){
+        cout << "syntax error" << endl;
+        return false;
+    }
+
+    else {
+        if(user_input.back()[0] != '#') {
+            cout << "syntax error" << endl;
+            return false;
+        }
+        try {
+            id = number_from_string(user_input.back().substr(1));
+        }
+        catch (exception &ex) {
+            cout << "syntax error" << endl;
+            return false;
+        }
+
+        for (;i<dnaSequences.size();i++){
+            if (id == dnaSequences[i]->getId())
+                d = dnaSequences[i];
+        }
+        if (d == NULL) {
+            cout << "this id not available chick list command " << endl;
+            return false;
+        }
+        cout << "Do you really want to delete" << d->getName()<<": "<< *d << "?" << endl;
+        cout << "Please confirm by 'y' or 'Y', or cancel by 'n' or 'N'." << endl;
+        cout << "confirm >>>";
+        cin >> confirm;
+        while(confirm != "Y" and confirm != "y"  and confirm != "N" and confirm != "n" ){
+            cout << "You have typed an invalid response. Please either confirm by 'y'/'Y', or cancel by 'n'/'N'." << endl;
+            cin >> confirm;
+        }
+        if (confirm == "y" or confirm == "Y"){
+            cout << "Deleted: [" << d->getId() << "] " << d->getName() <<": " << *d << endl;
+            dnaSequences.erase(dnaSequences.begin() + i -1);
+            delete d;
+        }
+        else{
+            cout << "Delete canceled" << endl;
+        }
+        return true;
+    }
+}
+
+
+bool CLI::lenSequnce(vector<string>& user_input, std::vector<DnaSequenceDecorator *> &dnaSequences) {
+
+    string confirm;
+    size_t id;
+    std::size_t i=0;
+    DnaSequenceDecorator *d = NULL;
+
+    if (user_input.size() != 2){
+        cout << "syntax error" << endl;
+        return false;
+    }
+
+    else {
+        if(user_input.back()[0] != '#') {
+            cout << "syntax error" << endl;
+            return false;
+        }
+        try {
+            id = number_from_string(user_input.back().substr(1));
+        }
+        catch (exception &ex) {
+            cout << "syntax error" << endl;
+            return false;
+        }
+
+        for (;i<dnaSequences.size();i++){
+            if (id == dnaSequences[i]->getId())
+                d = dnaSequences[i];
+        }
+        if (d == NULL) {
+            cout << "this id not available chick list command " << endl;
+            return false;
+        }
+        cout << d->getLength() << endl;
+        return true;
+    }
+}
+
+bool CLI::findSequnce(vector<string>& user_input, std::vector<DnaSequenceDecorator *> &dnaSequences) {
+
+    size_t index_find;
+    size_t id;
+    size_t sec_id;
+    std::size_t i=0;
+    DnaSequenceDecorator *d = NULL;
+    DnaSequenceDecorator *sec_d = NULL;
+
+    if (user_input.size() != 3){
+        cout << "syntax error" << endl;
+        return false;
+    }
+
+    else {
+        if(user_input.back()[0] != '#') {
+            // find given seq in #D
+            DnaSequence temp(user_input.back());
+            user_input.pop_back();
+
+            try {
+                id = number_from_string(user_input.back().substr(1));
+            }
+            catch (exception &ex) {
+                cout << "syntax error" << endl;
+                return false;
+            }
+
+            for (;i<dnaSequences.size();i++){
+                if (id == dnaSequences[i]->getId())
+                    d = dnaSequences[i];
+            }
+            try {
+                index_find = DnaSequenceSearch::Find(*d, temp);
+            }
+            catch (exception &ex) {
+                cout << "error while searching, cant find this sub Sequence or the length of the subSequence is larger then the orignal" << endl;
+
+            }
+            cout << index_find << endl;
+            return true;
+
+        }
+
+        else{
+            try {
+                sec_id = number_from_string(user_input.back().substr(1));
+                user_input.pop_back();
+                id = number_from_string(user_input.back().substr(1));
+
+            }
+            catch (exception &ex) {
+                cout << "syntax error" << endl;
+                return false;
+            }
+            user_input.pop_back();
+
+
+        }
+        for (;i<dnaSequences.size();i++){
+            if (sec_id == dnaSequences[i]->getId())
+                sec_d = dnaSequences[i];
+            if(id == dnaSequences[i]->getId())
+                d = dnaSequences[i];
+        }
+        if (d == NULL or sec_id == NULL) {
+            cout << "this id not available chick list command " << endl;
+            return false;
+        }
+        try {
+            index_find = DnaSequenceSearch::Find(*d, *sec_d);
+        }
+        catch (exception &ex) {
+            cout << "error while searching, cant find this sub Sequence or the length of the subSequence is larger then the orignal" << endl;
+
+        }        cout << index_find << endl;
+        return true;
+    }
+}
+
+bool CLI::findAllSequnce(vector<string>& user_input, std::vector<DnaSequenceDecorator *> &dnaSequences) {
+
+    list<size_t> index_find;
+    size_t id;
+    size_t sec_id;
+    std::size_t i=0;
+    DnaSequenceDecorator *d = NULL;
+    DnaSequenceDecorator *sec_d = NULL;
+
+    if (user_input.size() != 3){
+        cout << "syntax error" << endl;
+        return false;
+    }
+
+    else {
+        if(user_input.back()[0] != '#') {
+            // find given seq in #D
+            DnaSequence temp(user_input.back());
+            user_input.pop_back();
+
+            try {
+                id = number_from_string(user_input.back().substr(1));
+            }
+            catch (exception &ex) {
+                cout << "syntax error" << endl;
+                return false;
+            }
+
+            for (;i<dnaSequences.size();i++){
+                if (id == dnaSequences[i]->getId())
+                    d = dnaSequences[i];
+            }
+            try {
+                index_find = DnaSequenceSearch::FindAll(*d, temp);
+            }
+            catch (exception &ex) {
+                cout << "error while searching, cant find this sub Sequence or the length of the subSequence is larger then the orignal" << endl;
+
+            }
+            for (list<std::size_t>::iterator it = index_find.begin(); it != index_find.end(); ++it) {
+                cout << *it << " " ;
+            }
+            return true;
+        }
+
+        else{
+            try {
+                sec_id = number_from_string(user_input.back().substr(1));
+                user_input.pop_back();
+                id = number_from_string(user_input.back().substr(1));
+
+            }
+            catch (exception &ex) {
+                cout << "syntax error" << endl;
+                return false;
+            }
+            user_input.pop_back();
+        }
+        for (;i<dnaSequences.size();i++){
+            if (sec_id == dnaSequences[i]->getId())
+                sec_d = dnaSequences[i];
+            if(id == dnaSequences[i]->getId())
+                d = dnaSequences[i];
+        }
+        if (d == NULL or sec_id == NULL) {
+            cout << "this id not available chick list command " << endl;
+            return false;
+        }
+        try {
+            index_find = DnaSequenceSearch::FindAll(*d, *sec_d);
+        }
+        catch (exception &ex) {
+            cout << "error while searching, cant find this sub Sequence or the length of the subSequence is larger then the orignal" << endl;
+
+        }
+        for (list<std::size_t>::iterator it = index_find.begin(); it != index_find.end(); ++it) {
+            cout << *it << " " ;
+        }
+        return true;
+    }
+}
+
+bool CLI::countSequnce(vector<string>& user_input, std::vector<DnaSequenceDecorator *> &dnaSequences) {
+
+    size_t index_find;
+    size_t id;
+    size_t sec_id;
+    std::size_t i = 0;
+    DnaSequenceDecorator *d = NULL;
+    DnaSequenceDecorator *sec_d = NULL;
+
+    if (user_input.size() != 3) {
+        cout << "syntax error" << endl;
+        return false;
+    } else {
+        if (user_input.back()[0] != '#') {
+            // find given seq in #D
+            DnaSequence temp(user_input.back());
+            user_input.pop_back();
+
+            try {
+                id = number_from_string(user_input.back().substr(1));
+            }
+            catch (exception &ex) {
+                cout << "syntax error" << endl;
+                return false;
+            }
+
+            for (; i < dnaSequences.size(); i++) {
+                if (id == dnaSequences[i]->getId())
+                    d = dnaSequences[i];
+            }
+            try {
+                index_find = DnaSequenceSearch::Count(*d, temp);
+            }
+            catch (exception &ex) {
+                cout
+                        << "error while searching, cant find this sub Sequence or the length of the subSequence is larger then the orignal"
+                        << endl;
+
+            }
+            cout << index_find << endl;
+            return true;
+
+        } else {
+            try {
+                sec_id = number_from_string(user_input.back().substr(1));
+                user_input.pop_back();
+                id = number_from_string(user_input.back().substr(1));
+
+            }
+            catch (exception &ex) {
+                cout << "syntax error" << endl;
+                return false;
+            }
+            user_input.pop_back();
+
+
+        }
+        for (; i < dnaSequences.size(); i++) {
+            if (sec_id == dnaSequences[i]->getId())
+                sec_d = dnaSequences[i];
+            if (id == dnaSequences[i]->getId())
+                d = dnaSequences[i];
+        }
+        if (d == NULL or sec_id == NULL) {
+            cout << "this id not available chick list command " << endl;
+            return false;
+        }
+        try {
+            index_find = DnaSequenceSearch::Count(*d, *sec_d);
+        }
+        catch (exception &ex) {
+            cout
+                    << "error while searching, cant find this sub Sequence or the length of the subSequence is larger then the orignal"
+                    << endl;
+
+        }
+        cout << index_find << endl;
+        return true;
+    }
+}

@@ -11,7 +11,7 @@ class DnaSequencePairing {
     static void reverseStr(std::string& str);
 
 public:
-    static DnaSequence Pairing(DnaSequence& dnaSequence);
+    static std::string Pairing(DnaSequence& dnaSequence);
 
 };
 
